@@ -1,5 +1,11 @@
 ##All AI Usage for Bioinformatics Project##
 
+11/15/2026 
+Tool: google search 
+Prompt: one hot encoding for machine learning
+Source pulled from google AI Summary: https://www.geeksforgeeks.org/machine-learning/ml-one-hot-encoding/
+
+
 11/15/2026
 Purpose: Get a chunk of code that I could adapt to our data set and true matrix
 Tool and version: Chatgpt, GPT-6
@@ -100,3 +106,15 @@ def explore_threshold(threshold):
 
     print(f"TN={m['TN']}   FP={m['FP']}   FN={m['FN']}   TP={m['TP']}")
     print("Model coefficients and predicted probabilities are unchanged.")
+
+
+
+11/17/26 
+Tool: google search
+prompt: confusion matrix for random forest classifier
+source pulled from google's AI summary: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html
+
+
+
+
+
