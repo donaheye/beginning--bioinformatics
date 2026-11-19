@@ -113,3 +113,10 @@ def explore_threshold(threshold):
 Tool: google search
 prompt: confusion matrix for random forest classifier
 source pulled from google's AI summary: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html
+
+11/19/2026
+Tool: gemini flash 3.5 
+prompt: Explain this error: name 'metrics' is not defined
+Verification that it was correct before committing: I looked at the old colab to see if we had imported metrics from sklearn.
+
+
