@@ -1,0 +1,115 @@
+##AI Usage for Bioinformatics Project##
+
+11/15/2026 
+Tool: google search 
+Prompt: one hot encoding for machine learning
+Source pulled from google AI Summary: https://www.geeksforgeeks.org/machine-learning/ml-one-hot-encoding/
+
+
+11/15/2026
+Purpose: Get a chunk of code that I could adapt to our data set and true matrix
+Tool and version: Chatgpt, GPT-6
+Prompt: 
+How would I used one hot encoder on a similar dataset to this, where i want to use isolates to predict host
+Sample 	Host 	Isolate 1	Isolate 2 	Isolate 3 	Isolate 4 
+A	Dog	Myocobacterium tuberculosis 	Curtobacterium rafiki 	0	0
+B	Cat	Enterobacter sp. 	0	0	0
+C	Fish 	Enterococcus cloacea 	0	0	0
+D	Dog 	Myocobacterium tuberculosis 	0	0	0
+E	Pig 	Bacillus subtiliis 	0	0	0
+F	Cat 	Staphlococcus epidermis 	0	0	0
+G	Fish 	Staphlococcus aureus 	0	0	0
+H	Pig 	Tapherina sp. 	0	0	0
+
+Note: I used a fake-matrix that has similar information to what I have in our actual data matrix, but made sure that there was no overlap of information
+
+Validation before committing changes: In a separate colab notebook, I ran the code on my fake data matrix to see if it would reorganize the data into a OneHotEncoder and the mlb matrix 
+
+
+
+11/17/2026 
+Purpose: Explaining a chunk of code in the Module 10 colab notebook to understand how to make a confusion matrix. 
+
+Tool and version: ChatGPT, GPT-6  
+
+Prompt: Explain this code line by line 
+import ipywidgets as widgets
+
+# Fixed validation probabilities from the trained logistic regression
+# p2 was calculated in the preceding cell.
+jitter = np.random.default_rng(42).normal(0, 0.04, len(y_val))
+
+@widgets.interact(
+    threshold=widgets.FloatSlider(
+        value=0.50, min=0.05, max=0.95, step=0.05,
+        description="Threshold:",
+        continuous_update=False
+    )
+)
+def explore_threshold(threshold):
+
+    # Change classifications WITHOUT retraining the model
+    predictions = (p2 >= threshold).astype(int)
+    m = metrics(y_val, predictions)
+
+    fig, axs = plt.subplots(1, 2, figsize=(12, 4.5))
+
+    # LEFT: Predicted probabilities for each tumor
+    for actual, label, color in [
+        (0, "Actual Responder", BLUE),
+        (1, "Actual Nonresponder", ORANGE)
+    ]:
+        mask = y_val == actual
+        axs[0].scatter(
+            p2[mask], y_val[mask] + jitter[mask],
+            color=color, alpha=0.65, s=35, label=label
+        )
+
+    # Highlight incorrectly classified tumors
+    wrong = predictions != y_val
+    axs[0].scatter(
+        p2[wrong], y_val[wrong] + jitter[wrong],
+        marker="x", color="black", s=65,
+        label="Incorrect prediction"
+    )
+
+    # Decision threshold
+    axs[0].axvline(threshold, color="black", linestyle="--",
+                   linewidth=2, label=f"Threshold = {threshold:.2f}")
+
+    axs[0].set(
+        xlabel="Predicted probability of Nonresponse",
+        ylabel="Actual treatment response",
+        yticks=[0, 1],
+        yticklabels=["Responder", "Nonresponder"],
+        xlim=(0, 1),
+        ylim=(-0.2, 1.2),
+        title="Same probabilities, different classifications"
+    )
+    axs[0].legend(fontsize=8, loc="upper center")
+
+    # RIGHT: Updated confusion matrix
+    show_cm(axs[1], y_val, predictions,
+            f"Confusion matrix (threshold = {threshold:.2f})")
+
+    plt.tight_layout()
+    plt.show()
+
+    # Updated performance metrics
+    display(pd.DataFrame([{
+        "Accuracy": m["accuracy"],
+        "Sensitivity": m["sensitivity / recall"],
+        "Specificity": m["specificity"],
+        "Precision": m["precision"],
+        "F1": m["F1"]
+    }]).round(3))
+
+    print(f"TN={m['TN']}   FP={m['FP']}   FN={m['FN']}   TP={m['TP']}")
+    print("Model coefficients and predicted probabilities are unchanged.")
+
+
+
+11/17/26 
+Tool: google search
+prompt: confusion matrix for random forest classifier
+source pulled from google's AI summary: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html
